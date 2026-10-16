@@ -8,7 +8,7 @@
     "type": "object",
     "additionalProperties": true,
     "properties": {
-      "adId": { "type": "string", "title": "Ad ID" },
+      "adId": { "type": ["string", "integer"], "title": "Ad ID" },
       "firstShownDate": { "type": "string", "title": "First shown" },
       "lastShownDate": { "type": "string", "title": "Last shown" },
       "status": { "type": "string", "title": "Status" },
@@ -24,7 +24,7 @@
       "advertisingObjective": { "type": "string", "title": "Advertising objective" },
       "rejectionInfo": { "type": "object", "title": "Rejection info" },
       "advertiserCountryCode": { "type": "string", "title": "Advertiser country" },
-      "advertiserBusinessId": { "type": "string", "title": "Advertiser business ID" },
+      "advertiserBusinessId": { "type": ["string", "integer"], "title": "Advertiser business ID" },
       "advertiserBusinessName": { "type": "string", "title": "Advertiser" },
       "paidForBy": { "type": "string", "title": "Paid for by" },
       "advertiserFollowerCount": { "type": "integer", "title": "Advertiser followers" },

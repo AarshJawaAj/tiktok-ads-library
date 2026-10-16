@@ -32,7 +32,7 @@
     "dateTo": {
       "title": "Published to (YYYYMMDD)",
       "type": "string",
-      "description": "End of the ad published range. Format YYYYMMDD. Leave empty to use today.",
+      "description": "End of the ad published range. Format YYYYMMDD. Leave empty to use yesterday. TikTok rejects today and future dates.",
       "editor": "textfield"
     },
     "countryCodes": {

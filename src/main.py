@@ -81,6 +81,11 @@ def _today_yyyymmdd() -> str:
     return datetime.now(timezone.utc).strftime('%Y%m%d')
 
 
+def _latest_query_date() -> str:
+    """TikTok rejects a published-date max of today or later."""
+    return (datetime.now(timezone.utc) - timedelta(days=1)).strftime('%Y%m%d')
+
+
 def _normalize_date(value: str | None, *, fallback: str) -> str:
     raw = (value or '').strip()
     if not raw:
@@ -110,8 +115,9 @@ def _flatten_ad(row: dict[str, Any], *, search_term: str, search_type: str) -> d
 
     tiktok_account = advertiser.get('tiktok_account') or {}
     targeting = (row.get('ad_group') or {}).get('targeting_info')
-    return {
-        'adId': ad.get('id'),
+    business_id = advertiser.get('business_id') or advertiser.get('buisness_id')
+    item = {
+        'adId': None if ad.get('id') is None else str(ad.get('id')),
         'firstShownDate': ad.get('first_shown_date'),
         'lastShownDate': ad.get('last_shown_date'),
         'status': ad.get('status'),
@@ -127,7 +133,7 @@ def _flatten_ad(row: dict[str, Any], *, search_term: str, search_type: str) -> d
         'advertisingObjective': ad.get('advertising_objective'),
         'rejectionInfo': ad.get('rejection_info'),
         'advertiserCountryCode': advertiser.get('country_code'),
-        'advertiserBusinessId': advertiser.get('business_id') or advertiser.get('buisness_id'),
+        'advertiserBusinessId': None if business_id is None else str(business_id),
         'advertiserBusinessName': advertiser.get('business_name'),
         'paidForBy': advertiser.get('paid_for_by') or advertiser.get('paid_by'),
         'advertiserFollowerCount': advertiser.get('follower_count') or tiktok_account.get('follower_count'),
@@ -137,6 +143,7 @@ def _flatten_ad(row: dict[str, Any], *, search_term: str, search_type: str) -> d
         'searchTerm': search_term,
         'searchType': search_type,
     }
+    return {key: value for key, value in item.items() if value is not None}
 
 
 async def get_client_token(client: httpx.AsyncClient, key: str, secret: str) -> str:
@@ -234,9 +241,18 @@ async def main() -> None:
         if date_from < _one_year_ago_yyyymmdd():
             raise ValueError('dateFrom must be within the last year.')
 
-        date_to = _normalize_date(actor_input.get('dateTo'), fallback=_today_yyyymmdd())
+        date_to = _normalize_date(actor_input.get('dateTo'), fallback=_latest_query_date())
+        latest = _latest_query_date()
+        if date_to > latest:
+            Actor.log.info(
+                f'Published-to {date_to} is today or later. TikTok only accepts dates through {latest}.'
+            )
+            date_to = latest
         if date_to < date_from:
-            raise ValueError('dateTo must be on or after dateFrom.')
+            raise ValueError(
+                f'dateTo must be on or after dateFrom, and no later than {latest}. '
+                'TikTok rejects today and future dates.'
+            )
 
         countries_raw = actor_input.get('countryCodes') or []
         countries: list[str] = []
