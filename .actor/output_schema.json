@@ -1,0 +1,12 @@
+{
+  "actorOutputSchemaVersion": 1,
+  "title": "TikTok Ads Library Search output",
+  "description": "Ads matching the search term.",
+  "properties": {
+    "overview": {
+      "type": "string",
+      "title": "Overview",
+      "template": "{{links.apiDatasetUrl}}"
+    }
+  }
+}

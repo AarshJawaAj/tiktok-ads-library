@@ -1,0 +1,21 @@
+{
+  "$schema": "https://apify.com/schemas/v1/actor.ide.json",
+  "actorSpecification": 1,
+  "name": "tiktok-ads-library",
+  "title": "TikTok Ads Library Search",
+  "description": "Search TikTok Ads Library by keyword or exact phrase. Returns ad creatives, reach, and advertiser names from the official Commercial Content API. EU / UK coverage. $3 per 1,000 ads found.",
+  "version": "0.1",
+  "buildTag": "latest",
+  "meta": {
+    "templateId": "python"
+  },
+  "dockerfile": "./Dockerfile",
+  "readme": "./README.md",
+  "input": "./input_schema.json",
+  "output": "./output_schema.json",
+  "storages": {
+    "dataset": "./dataset_schema.json"
+  },
+  "minMemoryMbytes": 512,
+  "defaultMemoryMbytes": 1024
+}

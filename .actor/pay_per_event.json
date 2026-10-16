@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "pricingModel": "PAY_PER_EVENT",
+  "events": [
+    {
+      "eventName": "apify-actor-start",
+      "title": "Actor start",
+      "description": "Charged automatically when the run starts.",
+      "priceUsd": 0.00005
+    },
+    {
+      "eventName": "apify-default-dataset-item",
+      "title": "Default dataset item",
+      "description": "Keep at $0. Billing uses found-ad only.",
+      "priceUsd": 0
+    },
+    {
+      "eventName": "found-ad",
+      "title": "Found TikTok ad",
+      "description": "Charged once per ad written to the dataset. $3 per 1,000.",
+      "priceUsd": 0.003
+    }
+  ],
+  "suggestedMinimalMaxTotalChargeUsd": 0.003
+}

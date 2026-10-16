@@ -1,0 +1,78 @@
+{
+  "$schema": "https://apify.com/schemas/v1/dataset.ide.json",
+  "actorSpecification": 1,
+  "title": "TikTok Ads Library results",
+  "description": "Ads returned for the search term, including detail fields when details are included.",
+  "fields": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "additionalProperties": true,
+    "properties": {
+      "adId": { "type": "string", "title": "Ad ID" },
+      "firstShownDate": { "type": "string", "title": "First shown" },
+      "lastShownDate": { "type": "string", "title": "Last shown" },
+      "status": { "type": "string", "title": "Status" },
+      "statusStatement": { "type": "string", "title": "Status statement" },
+      "videoUrls": { "type": "array", "title": "Video URLs" },
+      "imageUrls": { "type": "array", "title": "Image URLs" },
+      "reach": { "type": "object", "title": "Reach" },
+      "uniqueUsersSeen": { "type": "string", "title": "Unique users seen" },
+      "title": { "type": "string", "title": "Title" },
+      "externalUrl": { "type": "string", "title": "Landing URL" },
+      "downloadUrl": { "type": "string", "title": "Download URL" },
+      "callToAction": { "type": "string", "title": "Call to action" },
+      "advertisingObjective": { "type": "string", "title": "Advertising objective" },
+      "rejectionInfo": { "type": "object", "title": "Rejection info" },
+      "advertiserCountryCode": { "type": "string", "title": "Advertiser country" },
+      "advertiserBusinessId": { "type": "string", "title": "Advertiser business ID" },
+      "advertiserBusinessName": { "type": "string", "title": "Advertiser" },
+      "paidForBy": { "type": "string", "title": "Paid for by" },
+      "advertiserFollowerCount": { "type": "integer", "title": "Advertiser followers" },
+      "advertiserAvatarUrl": { "type": "string", "title": "Advertiser avatar" },
+      "advertiserProfileUrl": { "type": "string", "title": "Advertiser profile" },
+      "targetingInfo": { "type": "object", "title": "Targeting" },
+      "searchTerm": { "type": "string", "title": "Search term" },
+      "searchType": { "type": "string", "title": "Search type" }
+    }
+  },
+  "views": {
+    "overview": {
+      "title": "Overview",
+      "transformation": {
+        "fields": [
+          "adId",
+          "title",
+          "advertiserBusinessName",
+          "paidForBy",
+          "advertiserCountryCode",
+          "status",
+          "uniqueUsersSeen",
+          "firstShownDate",
+          "lastShownDate",
+          "callToAction",
+          "externalUrl",
+          "advertiserProfileUrl",
+          "searchTerm"
+        ]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "adId": { "label": "Ad ID", "format": "text" },
+          "title": { "label": "Title", "format": "text" },
+          "advertiserBusinessName": { "label": "Advertiser", "format": "text" },
+          "paidForBy": { "label": "Paid for by", "format": "text" },
+          "advertiserCountryCode": { "label": "Advertiser country", "format": "text" },
+          "status": { "label": "Status", "format": "text" },
+          "uniqueUsersSeen": { "label": "Reach", "format": "text" },
+          "firstShownDate": { "label": "First shown", "format": "text" },
+          "lastShownDate": { "label": "Last shown", "format": "text" },
+          "callToAction": { "label": "Call to action", "format": "text" },
+          "externalUrl": { "label": "Landing URL", "format": "link" },
+          "advertiserProfileUrl": { "label": "Advertiser profile", "format": "link" },
+          "searchTerm": { "label": "Search term", "format": "text" }
+        }
+      }
+    }
+  }
+}

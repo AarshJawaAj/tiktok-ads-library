@@ -1,0 +1,94 @@
+{
+  "$schema": "https://apify.com/schemas/v1/input.ide.json",
+  "title": "TikTok Ads Library Search",
+  "description": "Search TikTok Ads Library by keyword or exact phrase. Date range is required. Coverage is EU / EEA / UK / Switzerland.",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "searchTerm": {
+      "title": "Search term",
+      "type": "string",
+      "description": "Keyword or phrase to find in ads. Max 50 characters.",
+      "editor": "textfield",
+      "prefill": "coffee",
+      "maxLength": 50
+    },
+    "searchType": {
+      "title": "Match type",
+      "type": "string",
+      "description": "Exact phrase matches the whole term. Fuzzy phrase matches any or all words in any order.",
+      "editor": "select",
+      "default": "exact_phrase",
+      "enum": ["exact_phrase", "fuzzy_phrase"],
+      "enumTitles": ["Exact phrase", "Fuzzy phrase (keyword)"]
+    },
+    "dateFrom": {
+      "title": "Published from (YYYYMMDD)",
+      "type": "string",
+      "description": "Start of the ad published range. Must be within the last year. Format YYYYMMDD.",
+      "editor": "textfield",
+      "prefill": "20260101"
+    },
+    "dateTo": {
+      "title": "Published to (YYYYMMDD)",
+      "type": "string",
+      "description": "End of the ad published range. Format YYYYMMDD. Leave empty to use today.",
+      "editor": "textfield"
+    },
+    "countryCodes": {
+      "title": "Country codes",
+      "type": "array",
+      "description": "Optional ISO country codes. Leave empty for all supported countries. Examples: FR, DE, IT, GB.",
+      "editor": "stringList",
+      "default": []
+    },
+    "adType": {
+      "title": "Ad type",
+      "type": "string",
+      "description": "Optional creative type filter.",
+      "editor": "select",
+      "default": "",
+      "enum": ["", "VIDEO", "IMAGES", "TEXT"],
+      "enumTitles": ["Any", "Video", "Images", "Text"]
+    },
+    "adStatus": {
+      "title": "Ad status",
+      "type": "string",
+      "description": "Optional status filter.",
+      "editor": "select",
+      "default": "",
+      "enum": ["", "ACTIVE", "INACTIVE"],
+      "enumTitles": ["Any", "Active", "Inactive"]
+    },
+    "maxAds": {
+      "title": "Max ads",
+      "type": "integer",
+      "description": "Stop after this many ads. TikTok returns at most 10 ads per page.",
+      "default": 50,
+      "minimum": 1,
+      "maximum": 1000
+    },
+    "includeDetails": {
+      "title": "Fetch ad details",
+      "type": "boolean",
+      "description": "On by default. Adds title, landing URL, call to action, advertiser profile, targeting, and rejection info. Uses one extra API request per ad.",
+      "default": true
+    },
+    "clientKey": {
+      "title": "TikTok client key (optional)",
+      "type": "string",
+      "description": "Override for local tests. Prefer Actor env TIKTOK_CLIENT_KEY in production.",
+      "editor": "textfield",
+      "isSecret": true,
+      "sectionCaption": "Credentials (optional overrides)"
+    },
+    "clientSecret": {
+      "title": "TikTok client secret (optional)",
+      "type": "string",
+      "description": "Override for local tests. Prefer Actor env TIKTOK_CLIENT_SECRET in production.",
+      "editor": "textfield",
+      "isSecret": true
+    }
+  },
+  "required": ["searchTerm", "dateFrom"]
+}
